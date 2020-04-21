@@ -13,8 +13,8 @@ def merge_sort(arr,start,end):
     i = 0
     j = 0
 
-    while i<len(tmp1) and j<len(tmp2) :
-        if tmp1[i] < tmp2[j] :
+    while i<len(tmp1) and j<len(tmp2):
+        if tmp1[i] < tmp2[j]:
             arr[index] = tmp1[i]
             i+=1
             index+=1
@@ -23,11 +23,12 @@ def merge_sort(arr,start,end):
             j+=1
             index+=1
         
-    while i<len(tmp1) :
+    while i<len(tmp1):
         arr[index] = tmp1[i]
         i+=1
         index+=1
-    while j<len(tmp2) :
+        
+    while j<len(tmp2):
         arr[index] = tmp2[j]
         j+=1
         index+=1
