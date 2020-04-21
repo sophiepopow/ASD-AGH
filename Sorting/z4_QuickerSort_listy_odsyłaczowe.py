@@ -21,7 +21,8 @@ def partition (L):
         else:
             right[1].next = curr
             right[1] = curr
-            
+        curr = curr.next
+        
     left[1].next = pivot
     pivot.next = right[0].next
 
