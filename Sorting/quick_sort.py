@@ -12,7 +12,7 @@ def divide(arr,start,end):
 
     arr[limit], arr[n-1] = arr[n-1], arr[limit]
 
-    return limes
+    return limit
 
 def quick_sort(arr, start, end):
 
