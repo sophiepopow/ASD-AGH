@@ -16,7 +16,7 @@ def sortingEdges(G):
 #find union
 # wykorzystujac find union sprawdzamy czy dana krawedz nie laczy zbiorow z 2 czerownymi
 class Node:
-    def __init__(self,id):
+    def __init__(self,id,color):
         self.id = id
         self.parent = parent
         self.rank = rank 
