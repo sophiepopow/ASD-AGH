@@ -1,14 +1,15 @@
 
 # sortowanie krawedzi malejaco
-def sortingEdges(G):
+def sortingEdges(G,nodes):
     #(krawedz, (x,y))
     Edges = []
     n = len(G)
     #Graf nieksierowany!
     for x in range(n):
         for y in range(x+1):
-            vertex = (x,y)
-            Edges.add((G[x][y],vertex))
+            if G[x][y]:
+                vertex = (nodes[x],nodes[y])
+                Edges.append((G[x][y],vertex))
 
     Edges = sorted(Edges, key=lambda x: x[0], reverse=True)
     return Edges
@@ -16,11 +17,10 @@ def sortingEdges(G):
 #find union
 # wykorzystujac find union sprawdzamy czy dana krawedz nie laczy zbiorow z 2 czerownymi
 class Node:
-    def __init__(self,id,color):
+    def __init__(self,id,colorCount):
         self.id = id
-        self.parent = parent
-        self.rank = rank 
-        self.color = color
+        self.parent = self
+        self.rank = 0
         self.colorCount = 0
     
 def findSet(x):
@@ -52,14 +52,17 @@ def Union(x,y):
     return True
 
             
-def timeToDestroy(G):
-    Edges = sortingEdges(G)
+def timeToDestroy(G,nodes):
+    Edges = sortingEdges(G,nodes)
     time = 0
 
     for i in range(len(Edges)):
-        if not Union(Edges[i][1]):
+        if not Union(Edges[i][1][0],Edges[i][1][1]):
             time += Edges[i][0]
 
     return time
 
 
+nodes = [ Node(1,1),Node(2,1),Node(3,1),Node(4,0) ]
+G = [[None,3,None,100], [3,None,2,4], [None,2,None,1], [100,4,1,None]]
+print(timeToDestroy(G, nodes))
