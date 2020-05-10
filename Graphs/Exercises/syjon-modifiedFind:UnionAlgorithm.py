@@ -6,8 +6,8 @@ def sortingEdges(G,nodes):
     n = len(G)
     #Graf nieksierowany!
     for x in range(n):
-        for y in range(x+1):
-            if G[x][y]:
+        for y in range(x):
+            if G[x][y] != None:
                 vertex = (nodes[x],nodes[y])
                 Edges.append((G[x][y],vertex))
 
@@ -21,7 +21,7 @@ class Node:
         self.id = id
         self.parent = self
         self.rank = 0
-        self.colorCount = 0
+        self.colorCount = colorCount
     
 def findSet(x):
         if x != x.parent:
@@ -33,16 +33,16 @@ def Union(x,y):
     y = findSet(y)
 
     if x.rank > y.rank:
-        if(x.colorCount + y.colorCount < 2):
+        if(x.parent.colorCount + y.parent.colorCount < 2):
             y.parent = x
-            x.colorCount += y.colorCount
+            x.parent.colorCount += y.parent.colorCount
         else: 
             return False
 
     else:
-        if(x.colorCount + y.colorCount < 2):
+        if(x.parent.colorCount + y.parent.colorCount < 2):
             x.parent = y
-            y.colorCount += x.colorCount
+            y.parent.colorCount += x.parent.colorCount
 
             if x.rank == y.rank:
                 y.rank += 1
@@ -57,7 +57,10 @@ def timeToDestroy(G,nodes):
     time = 0
 
     for i in range(len(Edges)):
+
+        print(Union(Edges[i][1][0],Edges[i][1][1]))
         if not Union(Edges[i][1][0],Edges[i][1][1]):
+            
             time += Edges[i][0]
 
     return time
@@ -65,4 +68,5 @@ def timeToDestroy(G,nodes):
 
 nodes = [ Node(1,1),Node(2,1),Node(3,1),Node(4,0) ]
 G = [[None,3,None,100], [3,None,2,4], [None,2,None,1], [100,4,1,None]]
+
 print(timeToDestroy(G, nodes))
