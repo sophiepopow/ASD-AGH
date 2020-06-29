@@ -16,7 +16,6 @@ def find(root,key):
             root = root.left
     return None
 
-#POPRAWKA
 def insert(root,key,value):
     while root != None:
         if root.key < key:
@@ -52,16 +51,14 @@ def succesor(root):
         root = root.right
         return min(root)
     else:
-        if root.parent == None:
-            return None
-        if root.parent.right == None:
-            return root.parent
-        while root.parent.right.key == root.key:
-            root = root.parent
-            if root == None:
+        while True:
+            if root.parent == None:
                 return None
             if root.parent.right == None:
                 break
+            if root.parent.right.key != root.key:
+                break
+            root = root.parent
 
         return root.parent
 
@@ -70,39 +67,65 @@ def pred(root):
         root = root.left
         return max(root)
     else:
-        if root.parent == None:
-            return None
-        if root.parent.left == None:
-            return root.parent
-        while root.parent.left.key == root.key:
-            root = root.parent
-            if root == None:
+        while True:
+            if root.parent == None:
                 return None
             if root.parent.left == None:
                 break
-
+            if root.parent.left.key != root.key:
+                break
+            root = root.parent
         return root.parent
 
+def delete_no_children(node):
+    node = None
 
+def deete_one_children(node):
+    if node.left != None:
+        node.left.parent = node.parent
+        node = node.left
+    else:
+        node.left.parent = node.parent
+        node = node.right
+
+def count_child(root):
+    c = 0
+    if root.left != None:
+        c += 1
+    if root.right != None:
+        c += 1
+    
+    return c
 
 def delete(root):
-    if not root.right and not root.left:
-        parent = root.parent
-        if root.key < parent.key:
-            parent.left = None
-        else:
-            parent.right = None
-        root = None
-    else:
-        succ = succesor(root)
-        root.key = succ.key
-        parent = succ.parent
+    childrens = count_child(root)
+    if childrens == 0:
+        delete_no_children(root)
+        return
 
-        if succ.key < parent.key:
-            parent.left = None
-        else:
-            parent.right = None
-        succ = None
+    if childrens == 1:
+        deete_one_children(root)
+        return
+    
+    # 2 childrens
+
+    succ = succesor(root)
+
+    succ_childrens = count_child(succ)
+
+    tmp_left = succ.left
+    tmp_right = succ.right
+    tmp_parent = succ.parent
+
+    succ.right = root.right
+    succ.left = root.left
+    succ.parent = root.parent
+    
+    
+
+    
+    
+    
 
 def printTree(root, message = ""):
     if root == None:
@@ -126,8 +149,9 @@ insert(newNode, 25, 3)
 insert(newNode, 12, 3)
 insert(newNode, 17, 3)
 printTree(newNode)
+print("")
+# delete(find(newNode,17))
+delete(newNode)
+printTree(newNode)
 
-print(succesor(find(newNode, 12)).key)
-print(succesor(find(newNode, 10)).key)
-print(succesor(find(newNode, 4)).key)
-print(succesor(find(newNode, 17)).key)
+
