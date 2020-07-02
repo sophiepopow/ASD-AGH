@@ -1,3 +1,5 @@
+#Sprawdzanie czy graf nieskierowany jest dwudzielny (czyli czy da się podzielić jego wierzchołki na dwa zbiory, takie że krawędzie łączą jedynie wierzchołki z różnych zbiorów).
+
 def DFSHelper(G,i,colors,parentColor,visited):
     for j in range(len(G[i])):
         if G[i][j] and visited[j] == False:
